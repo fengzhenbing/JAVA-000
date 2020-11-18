@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:c="http://www.springframework.org/schema/c"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd">
+	
+	<!-- <context:annotation-config />
+	<aop:aspectj-autoproxy /> -->
+	
+<!-- 	<context:component-scan base-package="service">
+		<context:exclude-filter type="annotation" expression=""/>
+		<context:include-filter type="annotation" expression=""/>
+	</context:component-scan> -->
+	
+<!--	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+	    <property name="locations" value="classpath:application.properties"/>
+	</bean>-->
+	
+	<bean id="student" init-method="init" class="bean.Student">
+		<constructor-arg   value="10"/>
+        <constructor-arg   value="test"/>
+	</bean>
+
+    <bean id="student100" init-method="init" class="bean.Student" c:id="100" c:name="test100" />
+
+    <bean id="klass"   class="bean.Klass" >
+        <property name="students" >
+            <list>
+                <ref bean="student" />
+                <ref bean="student100" />
+            </list>
+        </property>
+    </bean>
+
+    <bean id="school" class="bean.School" >
+        <property name="class1" ref="klass" />
+        <property name="student100" ref="student100" />
+    </bean>
+
+</beans>
+	
+	
+	
