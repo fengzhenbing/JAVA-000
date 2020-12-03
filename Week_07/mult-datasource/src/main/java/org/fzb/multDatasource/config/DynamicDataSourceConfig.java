@@ -1,5 +1,6 @@
 package org.fzb.multDatasource.config;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.boot.autoconfigure.MybatisProperties;
@@ -28,6 +29,7 @@ import java.util.Map;
  */
 @Configuration
 @EnableConfigurationProperties(MybatisProperties.class)
+@Slf4j
 public class DynamicDataSourceConfig{
 
     private final MybatisProperties properties;
@@ -56,15 +58,19 @@ public class DynamicDataSourceConfig{
             @Override
             protected Object determineCurrentLookupKey() {
                 String key = datasourceKeyHolder.get();
-                if(StringUtils.isEmpty(key)) key =  Const.DATASOURCE_MASTER;
+                if(StringUtils.isEmpty(key)) {
+                    key =  Const.DATASOURCE_MASTER;
+                }
+                log.debug("当前使用数据源->{}",key);
                 return key;
             }
         };
-
         Map<String,DataSource> targetDataSources = new HashMap<>();
         targetDataSources.put(Const.DATASOURCE_MASTER,masterDataSource);
         targetDataSources.put(Const.DATASOURCE_SLAVE,slaveDataSource);
         dynamicDataSource.setTargetDataSources(Collections.unmodifiableMap(targetDataSources));
+
+
 
         return  dynamicDataSource;
     }
