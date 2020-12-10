@@ -1,9 +1,6 @@
 package org.fzb.ssproxySharding.mapper;
 
-
 import org.fzb.ssproxySharding.entity.OrderItemDO;
-
-import java.math.BigInteger;
 
 public interface OrderItemMapper {
     int deleteByPrimaryKey(Long id);

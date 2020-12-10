@@ -1,0 +1,27 @@
+server:
+  port: 8082
+
+#数据源
+spring:
+  application:
+    name: account
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/my_shop?useSSL=false&useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&allowMultiQueries=true&serverTimezone=UTC
+    username: root
+    password:
+    driver-class-name: com.mysql.jdbc.Driver
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://127.0.0.1:8761/eureka/
+
+mybatis:
+  mapper-locations: classpath:/mappers/*.xml
+  type-aliases-package: org.fzb.account.entity
+
+logging:
+  level:
+    root: debug

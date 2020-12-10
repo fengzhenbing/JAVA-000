@@ -8,7 +8,7 @@ import java.math.BigInteger;
 /**
  * 订单服务
  *
- * @author: fengzhenbing
+ * @author fengzhenbing
  */
 public interface OrderService {
     /**

@@ -1,6 +1,5 @@
 package org.fzb.ssproxySharding.entity;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
@@ -8,7 +7,7 @@ import lombok.Data;
 
 /**
  * order_item
- * @author 
+ * @author fengzhenbing
  */
 @Data
 public class OrderItemDO  extends BaseDO{
