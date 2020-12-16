@@ -13,6 +13,12 @@
 
     <dependencies>
 
+        <!-- 引入 Spring Cloud OpenFeign 相关依赖，使用 OpenFeign 提供声明式调用，并实现对其的自动配置 -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
+
         <!-- 引入 Spring Cloud Netflix Eureka Client 相关依赖，将 Eureka 作为注册中心的客户端，并实现对其的自动配置 -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
@@ -35,6 +41,12 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>5.1.47</version>
             <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.fzb</groupId>
+            <artifactId>common</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
         </dependency>
 
     </dependencies>

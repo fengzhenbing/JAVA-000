@@ -1,5 +1,9 @@
 package org.fzb.order.service;
 
+import org.fzb.common.entity.OrderDO;
+
+import java.math.BigInteger;
+
 /**
  * 订单服务
  *
@@ -11,5 +15,7 @@ public interface OrderService {
      *
      * @return
      */
-    int createOrder();
+    BigInteger createOrder();
+
+    void pay(OrderDO orderDO);
 }

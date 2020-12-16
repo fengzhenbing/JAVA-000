@@ -1,7 +1,7 @@
 package org.fzb.account.controller;
 
-import org.fzb.account.entity.MemberDO;
 import org.fzb.account.service.MemberService;
+import org.fzb.common.entity.MemberDO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,7 +21,7 @@ public class MemberController {
     private MemberService memberService;
 
     @PostMapping("/decreaseBalance")
-    public Boolean createOrder(@RequestBody MemberDO memberDO){
+    public Boolean decreaseBalance(@RequestBody MemberDO memberDO) throws Exception {
         return memberService.decreaseBalance(memberDO);
     }
 

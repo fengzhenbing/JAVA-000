@@ -1,4 +1,4 @@
-package org.fzb.order.entity;
+package org.fzb.common.entity;
 
 import lombok.Data;
 

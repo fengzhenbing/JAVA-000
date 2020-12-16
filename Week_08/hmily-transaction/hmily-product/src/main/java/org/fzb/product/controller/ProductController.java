@@ -1,6 +1,6 @@
 package org.fzb.product.controller;
 
-import org.fzb.product.entity.ProductDO;
+import org.fzb.common.entity.ProductDO;
 import org.fzb.product.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,7 +20,7 @@ public class ProductController {
     private ProductService memberService;
 
     @PostMapping("/decreaseStock")
-    public Boolean createOrder(@RequestBody ProductDO productDO){
+    public Boolean decreaseStock(@RequestBody ProductDO productDO){
         return memberService.decreaseStock(productDO);
     }
 

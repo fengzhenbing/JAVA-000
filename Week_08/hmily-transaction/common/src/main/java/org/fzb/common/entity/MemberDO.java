@@ -1,4 +1,4 @@
-package org.fzb.account.entity;
+package org.fzb.common.entity;
 
 import lombok.Data;
 
@@ -89,7 +89,12 @@ public class MemberDO implements Serializable {
     /**
      * 余额
      */
-    private Long blance;
+    private Long balance;
+
+    /**
+     * 冻结额 tcc
+     */
+    private Long freezingBalance;
 
     private Long schoolId;
 

@@ -1,6 +1,7 @@
 package org.fzb.product.service;
 
-import org.fzb.product.entity.ProductDO;
+
+import org.fzb.common.entity.ProductDO;
 
 public interface ProductService {
 

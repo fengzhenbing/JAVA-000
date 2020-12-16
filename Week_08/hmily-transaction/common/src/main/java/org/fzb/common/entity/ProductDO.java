@@ -1,9 +1,10 @@
-package org.fzb.product.entity;
+package org.fzb.common.entity;
+
+import lombok.Data;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
-import lombok.Data;
 
 /**
  * product
@@ -96,6 +97,11 @@ public class ProductDO implements Serializable {
      * 库存
      */
     private Integer stock;
+
+    /**
+     * 冻结库存 tcc
+     */
+    private Integer freezingStock;
 
     /**
      * 库存预警值

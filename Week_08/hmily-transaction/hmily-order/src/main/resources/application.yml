@@ -18,10 +18,24 @@ eureka:
     service-url:
       defaultZone: http://127.0.0.1:8761/eureka/
 
+feign:
+  httpclient:
+  # Feign 客户端配置，对应 FeignClientProperties 配置属性类
+  client:
+    # config 配置项是 Map 类型。key 为 Feign 客户端的名字，value 为 FeignClientConfiguration 对象
+    config:
+      # 全局级别配置
+      default:
+        logger-level: BASIC
+      # 客户端级别配置
+      account:
+        logger-level: FULL
+
 mybatis:
   mapper-locations: classpath:/mappers/*.xml
   type-aliases-package: org.fzb.order.entity
 
 logging:
   level:
-    root: debug
+    root: info
+    org.fzb.order.feign: DEBUG
