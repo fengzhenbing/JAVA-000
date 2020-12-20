@@ -6,7 +6,6 @@ import org.fzb.product.mapper.ProductMapper;
 import org.fzb.product.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * ProductServiceImpl

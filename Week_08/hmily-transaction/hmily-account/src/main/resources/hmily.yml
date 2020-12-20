@@ -38,11 +38,6 @@ repository:
   file:
     path:
     prefix: /hmily
-  mongo:
-    databaseName:
-    url:
-    userName:
-    password:
   zookeeper:
     host: localhost:2181
     sessionTimeOut: 1000

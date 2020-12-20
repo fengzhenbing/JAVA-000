@@ -26,7 +26,7 @@ public class MemberServiceImpl implements MemberService {
     @HmilyTCC(confirmMethod="confirm",cancelMethod = "cancel")
     // @Transactional(rollbackFor = Exception.class)
     public Boolean decreaseBalance(MemberDO memberDO) throws Exception {
-       // int i = 2/0;
+          int i = 2/0;
         // 付款并冻结
        return  memberMapper.decreaseBalance(memberDO) > 0;
     }

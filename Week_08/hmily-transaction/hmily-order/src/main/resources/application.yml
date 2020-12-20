@@ -5,6 +5,8 @@ server:
 spring:
   application:
     name: order
+  main:
+    allow-bean-definition-overriding: true
   datasource:
     url: jdbc:mysql://127.0.0.1:3306/my_shop?useSSL=false&useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&allowMultiQueries=true&serverTimezone=UTC
     username: root

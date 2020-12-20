@@ -8,6 +8,7 @@ import org.fzb.order.feign.AccountClient;
 import org.fzb.order.feign.ProductClient;
 import org.fzb.order.mapper.OrderMapper;
 import org.fzb.order.service.OrderService;
+import org.springframework.aop.framework.AopContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -46,7 +47,8 @@ public class OrderServiceImpl implements OrderService {
         orderMapper.insert(orderDO);
 
         // 支付
-        pay(orderDO);
+        ((OrderService) AopContext.currentProxy()).pay(orderDO);
+       // pay(orderDO); //TODO 错误调用， 这样pay就是普通方法，不会被代理。
 
         return orderDO.getId();
     }
