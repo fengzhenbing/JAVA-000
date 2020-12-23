@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>rpcfx-demo-consumer</artifactId>
+    <artifactId>rpcfx-demo-provider</artifactId>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
@@ -42,16 +42,17 @@
 
         <dependency>
             <groupId>org.fzb</groupId>
-            <artifactId>rpcfx-demo-api</artifactId>
+            <artifactId>rpcfx-core</artifactId>
             <version>1.0-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.fzb</groupId>
-            <artifactId>rpcfx-core</artifactId>
+            <artifactId>rpcfx-demo-api</artifactId>
             <version>1.0-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
+
     </dependencies>
 
     <build>

@@ -24,6 +24,7 @@
         <module>rpcfx-demo-consumer</module>
         <module>rpcfx-demo-provider</module>
         <module>rpcfx-demo-provider</module>
+        <module>rpcfx-spring-boot-starter</module>
     </modules>
 
 
