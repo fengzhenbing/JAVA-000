@@ -8,7 +8,10 @@ import lombok.Data;
  * @author fengzhenbing
  */
 @Data
-public class RegistryConfig {
+public class RegistryConfig extends AbstractConfig{
+
+    String PASSWORD_KEY = "password";
+
     /**
      * Register center address
      */
@@ -23,4 +26,9 @@ public class RegistryConfig {
      * Password to login register center
      */
     private String password;
+
+    public void setPassword(String password) {
+        checkLength(PASSWORD_KEY, password);
+        this.password = password;
+    }
 }

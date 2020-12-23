@@ -8,7 +8,7 @@ import lombok.Data;
  * @author fengzhenbing
  */
 @Data
-public class ConsumerConfig {
+public class ConsumerConfig  extends AbstractConfig{
     /**
      * Networking framework client uses: netty, httpclient, etc.
      */
