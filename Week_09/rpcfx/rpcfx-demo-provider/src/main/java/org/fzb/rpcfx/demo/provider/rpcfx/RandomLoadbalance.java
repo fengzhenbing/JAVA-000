@@ -2,6 +2,7 @@ package org.fzb.rpcfx.demo.provider.rpcfx;
 
 import lombok.extern.slf4j.Slf4j;
 import org.fzb.rpcfx.api.LoadBalancer;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
@@ -11,6 +12,7 @@ import java.util.List;
  * @author fengzhenbing
  */
 @Slf4j
+@Component
 public class RandomLoadbalance implements LoadBalancer {
     @Override
     public String select(List<String> urls) {

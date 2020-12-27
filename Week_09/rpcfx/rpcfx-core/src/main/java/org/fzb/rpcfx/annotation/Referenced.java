@@ -1,5 +1,7 @@
 package org.fzb.rpcfx.annotation;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -14,7 +16,7 @@ import java.lang.annotation.Target;
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.FIELD, ElementType.METHOD, ElementType.ANNOTATION_TYPE})
-public @interface Reference {
+public @interface Referenced {
     /**
      * Interface class, default value is void.class
      */

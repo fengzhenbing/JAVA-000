@@ -1,8 +1,17 @@
 package org.fzb.rpcfx.config;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
+import org.fzb.rpcfx.registry.ZookeeperRegistryClient;
+import org.springframework.util.CollectionUtils;
+import sun.reflect.FieldAccessor;
+import sun.reflect.ReflectionFactory;
 
 import java.io.Serializable;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Modifier;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -11,9 +20,11 @@ import java.util.regex.Pattern;
  *
  * @author fengzhenbing
  */
+@Slf4j
 public abstract class AbstractConfig implements Serializable {
     private static final long serialVersionUID = 4267533505537413571L;
 
+    public static final String RPCFX = "rpcfx";
     /**
      * The maximum length of a <b>parameter's value</b>
      */
@@ -44,4 +55,37 @@ public abstract class AbstractConfig implements Serializable {
     public void refresh() {
         //todo
     }
+
+    public String getFullConfigPrefix(){
+        return RPCFX + "." + getConfigPrefix();
+    }
+
+    public abstract String getConfigPrefix();
+
+    public void bindProperties(AbstractConfig rpcfxConfig, Map<String, Object> properties){
+        if(CollectionUtils.isEmpty(properties)){
+            return;
+        }
+
+        properties.entrySet().forEach((e)->{
+            setField(rpcfxConfig,e.getKey(),e.getValue());
+        });
+
+    }
+
+    private void setField( Object target,String name, Object value) {
+        try {
+            Field field = target.getClass().getDeclaredField(name);
+            field.setAccessible(true);
+            Field modifiersField = Field.class.getDeclaredField("modifiers");
+            modifiersField.setAccessible(true);
+            modifiersField.setInt(field, field.getModifiers() & ~Modifier.FINAL);
+            FieldAccessor fieldAccessor = ReflectionFactory.getReflectionFactory().newFieldAccessor(field, true);
+            fieldAccessor.set(target, value);
+        } catch (IllegalAccessException | NoSuchFieldException e) {
+            log.error("properties are not valid , target -> {}, value -> {}",target,value);
+        }
+
+    }
+
 }

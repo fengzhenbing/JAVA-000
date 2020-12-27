@@ -1,7 +1,7 @@
 package org.fzb.rpcfx.demo.provider.service;
 
-import api.Order;
-import api.OrderService;
+import org.fzb.rpcfx.demo.api.Order;
+import org.fzb.rpcfx.demo.api.OrderService;
 import org.fzb.rpcfx.annotation.Service;
 
 /**

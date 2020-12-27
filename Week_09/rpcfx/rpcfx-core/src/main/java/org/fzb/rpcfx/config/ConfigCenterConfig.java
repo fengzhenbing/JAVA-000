@@ -1,9 +1,20 @@
 package org.fzb.rpcfx.config;
 
+import lombok.Data;
+
 /**
  * ConfigCenterBean
  *
  * @author fengzhenbing
  */
-public class ConfigCenterConfig {
+@Data
+public class ConfigCenterConfig extends AbstractConfig{
+    public static final String PREFIX = "config-center";
+    private String url;
+
+
+    @Override
+    public String getConfigPrefix() {
+        return PREFIX;
+    }
 }

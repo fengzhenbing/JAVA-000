@@ -1,2 +1,14 @@
 server:
   port: 8080
+
+zookeeper: 127.0.0.1:2181
+
+rpcfx:
+  application:
+    name: mall-provider
+  registry:
+    address: zookeeper://${zookeeper}
+  provider:
+    host: 127.0.0.1
+    port: 8080
+    contextPath: /provider

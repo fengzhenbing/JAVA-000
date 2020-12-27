@@ -13,7 +13,7 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Repeatable(EnableRpcfxConfigBindings.class)
-@Import(RpcfxConfigBindingRegistrar.class)
+//@Import(RpcfxConfigBindingRegistrar.class)
 public @interface EnableRpcfxConfigBinding {
     String prefix();
     Class<?> type();

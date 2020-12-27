@@ -1,21 +1,17 @@
-package api;
+package org.fzb.rpcfx.demo.api;
 
 /**
- * Order
+ * User
  *
  * @author fengzhenbing
  */
-public class Order {
+public class User {
     private Integer id;
-
     private String name;
 
-    private Float amount;
-
-    public Order(Integer id, String name, Float amount) {
+    public User(Integer id, String name) {
         this.id = id;
         this.name = name;
-        this.amount = amount;
     }
 
     public Integer getId() {
@@ -33,13 +29,4 @@ public class Order {
     public void setName(String name) {
         this.name = name;
     }
-
-    public Float getAmount() {
-        return amount;
-    }
-
-    public void setAmount(Float amount) {
-        this.amount = amount;
-    }
-
 }

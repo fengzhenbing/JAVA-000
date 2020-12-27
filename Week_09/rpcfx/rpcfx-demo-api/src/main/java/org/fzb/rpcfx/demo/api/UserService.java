@@ -1,4 +1,4 @@
-package api;
+package org.fzb.rpcfx.demo.api;
 
 /**
  * UserService
