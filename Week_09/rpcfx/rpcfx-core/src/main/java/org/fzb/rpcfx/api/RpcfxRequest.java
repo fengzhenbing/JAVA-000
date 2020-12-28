@@ -11,7 +11,8 @@ import java.util.*;
  */
 @Data
 public class RpcfxRequest {
-    private String serviceClass;
+    private String serviceInterfaceClass;
+    private String serviceImplClass;
     private String method;
     private Object[] params;
     private String url;

@@ -22,8 +22,9 @@ public class OkHttpClient implements NetClient{
     @Override
     public RpcfxResponse sendRequest(RpcfxRequest req) throws IOException {
         String reqJson = JSON.toJSONString(req);
-        System.out.println("req json: "+reqJson);
-
+        if(log.isDebugEnabled()){
+            log.debug("req json: {}",reqJson);
+        }
         // 1.可以复用client
         // 2.尝试使用httpclient或者netty client
         okhttp3.OkHttpClient client = new okhttp3.OkHttpClient();
@@ -32,7 +33,9 @@ public class OkHttpClient implements NetClient{
                 .post(RequestBody.create(JSONTYPE, reqJson))
                 .build();
         String respJson = client.newCall(request).execute().body().string();
-        log.info("resp json: "+respJson);
+         if(log.isDebugEnabled()){
+            log.debug("resp json: {}",respJson);
+        }
         return JSON.parseObject(respJson, RpcfxResponse.class);
     }
 }

@@ -25,7 +25,7 @@ public class RpcfxInvoker {
 
     public RpcfxResponse invoke(RpcfxRequest request) {
         RpcfxResponse response = new RpcfxResponse();
-        String serviceClass = request.getServiceClass();
+        String serviceClass = request.getServiceImplClass();
 
         // 作业1：改成泛型和反射
         // this.applicationContext.getBean(serviceClass);

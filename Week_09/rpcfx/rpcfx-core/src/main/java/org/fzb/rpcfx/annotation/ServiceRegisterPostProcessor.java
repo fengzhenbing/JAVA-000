@@ -23,7 +23,7 @@ import java.util.Objects;
  * @author fengzhenbing
  */
 @Slf4j
-public class ServiceRegisterPostProcessor  implements InitializingBean, BeanPostProcessor, ApplicationContextAware {
+public class ServiceRegisterPostProcessor implements InitializingBean, BeanPostProcessor, ApplicationContextAware {
     private ApplicationContext applicationContext;
 
     private RegistryConfig registryConfig;
@@ -32,26 +32,26 @@ public class ServiceRegisterPostProcessor  implements InitializingBean, BeanPost
 
     @Override
     public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
-        if(bean.getClass().isAnnotationPresent(Service.class)){
-            RegistryClient registryClient = RegistryClientFactory.getRegistryClient(registryConfig,applicationContext);
-            if(Objects.isNull(registryClient)){
+        if (bean.getClass().isAnnotationPresent(Service.class)) {
+            RegistryClient registryClient = RegistryClientFactory.getRegistryClient(registryConfig, applicationContext);
+            if (Objects.isNull(registryClient)) {
                 log.error("cannot find a registryClient");
                 return bean;
             }
 
             String serviceHost = providerConfig.getHost();
             try {
-                if(StringUtils.isEmpty(serviceHost)){
+                if (StringUtils.isEmpty(serviceHost)) {
                     serviceHost = InetAddress.getLocalHost().getHostAddress();
                 }
             } catch (UnknownHostException e) {
                 e.printStackTrace();
             }
 
-            String serviceInterfaceName  = bean.getClass().getInterfaces()[0].getName();
+            String serviceInterfaceName = bean.getClass().getInterfaces()[0].getName();
             ServiceProviderDesc serviceDesc = ServiceProviderDesc.builder()
                     .host(serviceHost)
-                    .port(providerConfig.getPort()).serviceClass(serviceInterfaceName).build();
+                    .port(providerConfig.getPort()).serviceImplClass(bean.getClass().getName()).serviceInterfaceClass(serviceInterfaceName).build();
             registryClient.registerService(serviceDesc);
 
         }

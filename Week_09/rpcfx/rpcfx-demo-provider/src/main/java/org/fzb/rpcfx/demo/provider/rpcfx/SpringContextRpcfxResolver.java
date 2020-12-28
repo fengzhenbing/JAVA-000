@@ -10,12 +10,18 @@ import org.springframework.context.ApplicationContextAware;
  *
  * @author fengzhenbing
  */
-public class SpringContextRpcfxResolver implements RpcfxResolver , ApplicationContextAware {
+public class SpringContextRpcfxResolver implements RpcfxResolver, ApplicationContextAware {
     private ApplicationContext applicationContext;
 
     @Override
     public Object resolve(String serviceClass) {
-        return applicationContext.getBean(serviceClass);
+        try {
+            Class clazz = Class.forName(serviceClass);
+            return applicationContext.getBean(clazz);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     @Override

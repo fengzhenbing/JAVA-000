@@ -1,6 +1,7 @@
 package org.fzb.rpcfx.client;
 
 import org.fzb.rpcfx.api.Filter;
+import org.fzb.rpcfx.api.ServiceProviderDesc;
 
 /**
  * BuddyProxy
@@ -9,7 +10,7 @@ import org.fzb.rpcfx.api.Filter;
  */
 public class BuddyProxy implements RpcfxProxy{
     @Override
-    public <T> T create(Class<T> serviceClass, String url, Filter... filters) {
+    public <T> T create(Class<T> serviceClass, ServiceProviderDesc serviceProviderDesc, Filter... filters) {
         return null;
     }
 }

@@ -5,6 +5,7 @@ import okhttp3.MediaType;
 import org.fzb.rpcfx.api.Filter;
 import org.fzb.rpcfx.api.RpcfxRequest;
 import org.fzb.rpcfx.api.RpcfxResponse;
+import org.fzb.rpcfx.api.ServiceProviderDesc;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -19,8 +20,8 @@ public class JdkProxy implements RpcfxProxy{
     private static final NetClient defaultNetClient = new OkHttpClient();
 
     @Override
-    public <T> T create(final Class<T> serviceClass,final String url, final Filter... filters) {
-        return  (T) Proxy.newProxyInstance(Rpcfx.class.getClassLoader(), new Class[]{serviceClass}, new RpcfxInvocationHandler(serviceClass,url, filters));
+    public <T> T create(final Class<T> serviceClass, final ServiceProviderDesc serviceProviderDesc, final Filter... filters) {
+        return  (T) Proxy.newProxyInstance(Rpcfx.class.getClassLoader(), new Class[]{serviceClass}, new RpcfxInvocationHandler(serviceClass,serviceProviderDesc, filters));
     }
 
     public static class RpcfxInvocationHandler implements InvocationHandler {
@@ -28,12 +29,12 @@ public class JdkProxy implements RpcfxProxy{
         public static final MediaType JSONTYPE = MediaType.get("application/json; charset=utf-8");
 
         private final Class<?> serviceClass;
-        private final String url;
+        private final ServiceProviderDesc serviceProviderDesc;
         private final Filter[] filters;
 
-        public <T> RpcfxInvocationHandler(Class<T> serviceClass, String url, Filter... filters) {
+        public <T> RpcfxInvocationHandler(Class<T> serviceClass, ServiceProviderDesc serviceProviderDesc, Filter... filters) {
             this.serviceClass = serviceClass;
-            this.url = url;
+            this.serviceProviderDesc = serviceProviderDesc;
             this.filters = filters;
         }
 
@@ -48,10 +49,11 @@ public class JdkProxy implements RpcfxProxy{
             // mock == true, new Student("hubao");
 
             RpcfxRequest request = new RpcfxRequest();
-            request.setServiceClass(this.serviceClass.getName());
+            request.setServiceInterfaceClass(this.serviceClass.getName());
+            request.setServiceImplClass(serviceProviderDesc.getServiceImplClass());
             request.setMethod(method.getName());
             request.setParams(params);
-            request.setUrl(url);
+            request.setUrl(serviceProviderDesc.httpUrl());
 
             if (null!=filters) {
                 for (Filter filter : filters) {

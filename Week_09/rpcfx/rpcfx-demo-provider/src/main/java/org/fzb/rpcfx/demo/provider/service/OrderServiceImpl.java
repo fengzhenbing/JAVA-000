@@ -13,6 +13,6 @@ import org.fzb.rpcfx.annotation.Service;
 public class OrderServiceImpl implements OrderService {
     @Override
     public Order findOrderById(Integer id) {
-        return null;
+        return new Order(1, "test", (float) 111.0);
     }
 }

@@ -1,5 +1,6 @@
 package org.fzb.rpcfx.api;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
@@ -10,11 +11,13 @@ import lombok.Data;
  */
 @Data
 @Builder
+@AllArgsConstructor
 public class ServiceProviderDesc {
 
     private String host;
     private Integer port;
-    private String serviceClass;
+    private String serviceInterfaceClass;
+    private String serviceImplClass;
 
     // group
     // version

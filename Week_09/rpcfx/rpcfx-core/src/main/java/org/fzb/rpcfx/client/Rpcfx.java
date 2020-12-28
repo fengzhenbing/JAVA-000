@@ -25,21 +25,22 @@ import java.util.stream.Collectors;
 @Slf4j
 public class Rpcfx  {
     static {
-        ParserConfig.getGlobalInstance().addAccept("io.kimmking");
+        ParserConfig.getGlobalInstance().setAutoTypeSupport(true);
+        // ParserConfig.getGlobalInstance().addAccept("org.fzb");
     }
 
     private static final RpcfxProxy defaultProxy = new JdkProxy();
 
 
-    public static <T, filters> T createFromRegistry(final Class<T> serviceClass, final RegistryClient registryClient, Router router, LoadBalancer loadBalance, Filter... filter) {
+    public static <T, filters> T createFromRegistry(final Class<T> serviceInterfaceClass, final RegistryClient registryClient, Router router, LoadBalancer loadBalance, Filter... filter) {
 
         // 加filte之一
 
 
         // 1. 简单：从zk拿到服务提供的列表
-        List<ServiceProviderDesc> serviceProviderDescList =  registryClient.loadServiceProviderDescList(serviceClass.getName());
+        List<ServiceProviderDesc> serviceProviderDescList =  registryClient.loadServiceProviderDescList(serviceInterfaceClass.getName());
         if(CollectionUtils.isEmpty(serviceProviderDescList)){
-            log.error("no service provider for -> {}", serviceClass);
+            log.error("no service provider for -> {}", serviceInterfaceClass);
             return null;
         }
 
@@ -57,16 +58,17 @@ public class Rpcfx  {
             url = invokers.get(0);
         }
 
+        ServiceProviderDesc serviceProviderDesc = serviceProviderDescList.stream().filter(e->e.httpUrl().equals(url)).collect(Collectors.toList()).get(0);
 
-        return (T) defaultProxy.create(serviceClass, url, filter);
+        return (T) defaultProxy.create(serviceInterfaceClass, serviceProviderDesc, filter);
 
     }
 
 
-    public static <T> T create(final Class<T> serviceClass, final String url, Filter... filters) {
+    public static <T> T create(final Class<T> serviceClass, final ServiceProviderDesc serviceProviderDesc, Filter... filters) {
 
         // 0. 替换动态代理 -> AOP
-        return (T) defaultProxy.create(serviceClass, url, filters);
+        return (T) defaultProxy.create(serviceClass, serviceProviderDesc, filters);
 
     }
 
