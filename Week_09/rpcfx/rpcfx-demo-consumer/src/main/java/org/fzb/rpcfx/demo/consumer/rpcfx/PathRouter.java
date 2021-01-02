@@ -1,4 +1,4 @@
-package org.fzb.rpcfx.demo.provider.rpcfx;
+package org.fzb.rpcfx.demo.consumer.rpcfx;
 
 import org.fzb.rpcfx.api.Router;
 import org.springframework.stereotype.Component;

@@ -1,11 +1,12 @@
 package org.fzb.rpcfx.client;
 
 import com.alibaba.fastjson.parser.ParserConfig;
-import lombok.extern.slf4j.Slf4j;
+ import lombok.extern.slf4j.Slf4j;
 import org.fzb.rpcfx.api.Filter;
 import org.fzb.rpcfx.api.LoadBalancer;
 import org.fzb.rpcfx.api.Router;
 import org.fzb.rpcfx.api.ServiceProviderDesc;
+import org.fzb.rpcfx.config.ConsumerConfig;
 import org.fzb.rpcfx.registry.RegistryClient;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
@@ -30,9 +31,10 @@ public class Rpcfx  {
     }
 
     private static final RpcfxProxy defaultProxy = new JdkProxy();
+    private static final BuddyProxy buddyProxy = new BuddyProxy();
 
 
-    public static <T, filters> T createFromRegistry(final Class<T> serviceInterfaceClass, final RegistryClient registryClient, Router router, LoadBalancer loadBalance, Filter... filter) {
+    public static <T, filters> T createFromRegistry(Class<?> serviceInterfaceClass, ConsumerConfig consumerConfig, RegistryClient registryClient, Router router, LoadBalancer loadBalancer, Filter[] filters) {
 
         // 加filte之一
 
@@ -52,15 +54,20 @@ public class Rpcfx  {
 
         // loadBalance
         String url;
-        if(Objects.nonNull(loadBalance)){
-            url = loadBalance.select(invokers);
+        if(Objects.nonNull(loadBalancer)){
+            url = loadBalancer.select(invokers);
         }else {
             url = invokers.get(0);
         }
 
         ServiceProviderDesc serviceProviderDesc = serviceProviderDescList.stream().filter(e->e.httpUrl().equals(url)).collect(Collectors.toList()).get(0);
 
-        return (T) defaultProxy.create(serviceInterfaceClass, serviceProviderDesc, filter);
+        if(ConsumerConfig.PROXY_BYTE_BUDDY.equals(consumerConfig.getProxy())){
+            return (T) buddyProxy.create(serviceInterfaceClass, serviceProviderDesc, filters);
+        }else {
+            return (T) defaultProxy.create(serviceInterfaceClass, serviceProviderDesc, filters);
+        }
+
 
     }
 

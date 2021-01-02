@@ -8,3 +8,5 @@ rpcfx:
     name: mall-comsumer
   registry:
     address: zookeeper://${zookeeper}
+  consumer:
+    proxy: byteBuddy

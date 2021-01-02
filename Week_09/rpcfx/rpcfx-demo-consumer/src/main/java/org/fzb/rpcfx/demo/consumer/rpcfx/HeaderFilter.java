@@ -1,4 +1,4 @@
-package org.fzb.rpcfx.demo.provider.rpcfx;
+package org.fzb.rpcfx.demo.consumer.rpcfx;
 
 import org.fzb.rpcfx.api.Filter;
 import org.fzb.rpcfx.api.RpcfxRequest;

@@ -1,10 +1,12 @@
 package org.fzb.rpcfx.annotation;
 
+import com.sun.deploy.config.ClientConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.fzb.rpcfx.api.Filter;
 import org.fzb.rpcfx.api.LoadBalancer;
 import org.fzb.rpcfx.api.Router;
 import org.fzb.rpcfx.client.Rpcfx;
+import org.fzb.rpcfx.config.ConsumerConfig;
 import org.fzb.rpcfx.config.RegistryConfig;
 import org.fzb.rpcfx.registry.RegistryClient;
 import org.fzb.rpcfx.registry.RegistryClientFactory;
@@ -45,7 +47,7 @@ public class ServiceDiscoverPostProcessor implements InitializingBean, Instantia
 
     private RegistryConfig registryConfig;
 
-    private RegistryClient registryClient;
+    private ConsumerConfig consumerConfig;
 
     private final Map<String, InjectionMetadata> injectionMetadataCache = new ConcurrentHashMap<>(256);
 
@@ -152,6 +154,7 @@ public class ServiceDiscoverPostProcessor implements InitializingBean, Instantia
     @Override
     public void afterPropertiesSet() throws Exception {
         registryConfig = this.applicationContext.getBean(RegistryConfig.class);
+        consumerConfig = this.applicationContext.getBean(ConsumerConfig.class);
     }
 
     /**
@@ -201,7 +204,7 @@ public class ServiceDiscoverPostProcessor implements InitializingBean, Instantia
             }
 
             //todo value 缓存起来
-            Object value = Rpcfx.createFromRegistry(field.getType(),registryClient,router,loadBalancer,filters);
+            Object value = Rpcfx.createFromRegistry(field.getType(),consumerConfig,registryClient,router,loadBalancer,filters);
             if (Objects.nonNull(value)) {
                 ReflectionUtils.makeAccessible(field);
                 field.set(bean, value);
