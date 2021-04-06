@@ -1,0 +1,7 @@
+camel:
+  springboot:
+    main-run-controller: true
+
+ftp:
+  serverUrl: sftp://xx.xxx.xxx.xx:22/../home/data?username=xxx&password=xxx&delay=5s
+  saveLocation: file://target/data
