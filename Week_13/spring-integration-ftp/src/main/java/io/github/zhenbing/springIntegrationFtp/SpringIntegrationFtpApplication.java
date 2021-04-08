@@ -1,6 +1,7 @@
 package io.github.zhenbing.springIntegrationFtp;
 
 import com.jcraft.jsch.ChannelSftp;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -27,6 +28,22 @@ import java.io.File;
 @SpringBootApplication
 public class SpringIntegrationFtpApplication {
 
+    @Value("${ftp.host}")
+    private String host;
+    @Value("${ftp.port}")
+    private Integer port;
+    @Value("${ftp.user}")
+    private String user;
+    @Value("${ftp.password}")
+    private String password;
+
+    @Value("${ftp.remoteDirectory}")
+    private String remoteDirectory;
+
+    @Value("${ftp.localDirectory}")
+    private String localDirectory;
+
+
     public static void main(String[] args) {
         SpringApplication.run(SpringIntegrationFtpApplication.class, args);
     }
@@ -35,10 +52,10 @@ public class SpringIntegrationFtpApplication {
     @Bean
     public SessionFactory<ChannelSftp.LsEntry> sftpSessionFactory() {
         DefaultSftpSessionFactory factory = new DefaultSftpSessionFactory(true);
-        factory.setHost("xxx");
-        factory.setPort(22);
-        factory.setUser("xxx");
-        factory.setPassword("xxx");
+        factory.setHost(host);
+        factory.setPort(port);
+        factory.setUser(user);
+        factory.setPassword(password);
         factory.setAllowUnknownKeys(true);
         return new CachingSessionFactory<ChannelSftp.LsEntry>(factory);
     }
@@ -47,7 +64,7 @@ public class SpringIntegrationFtpApplication {
     public SftpInboundFileSynchronizer sftpInboundFileSynchronizer() {
         SftpInboundFileSynchronizer fileSynchronizer = new SftpInboundFileSynchronizer(sftpSessionFactory());
         fileSynchronizer.setDeleteRemoteFiles(false);
-        fileSynchronizer.setRemoteDirectory("/home/data");
+        fileSynchronizer.setRemoteDirectory(remoteDirectory);
         fileSynchronizer.setFilter(new SftpSimplePatternFileListFilter("*.png"));
         return fileSynchronizer;
     }
@@ -57,7 +74,7 @@ public class SpringIntegrationFtpApplication {
     public MessageSource<File> sftpMessageSource() {
         SftpInboundFileSynchronizingMessageSource source = new SftpInboundFileSynchronizingMessageSource(
                 sftpInboundFileSynchronizer());
-        source.setLocalDirectory(new File("sftp-inbound"));
+        source.setLocalDirectory(new File(localDirectory));
         source.setAutoCreateLocalDirectory(true);
         source.setLocalFilter(new AcceptOnceFileListFilter<File>());
         return source;

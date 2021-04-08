@@ -1,1 +1,7 @@
-
+ftp:
+  host: xx.xx
+  port: 22
+  user: xx
+  password: '%#!MKRootSdEnv03'
+  remoteDirectory: /home/data
+  localDirectory: sftp-inbound
